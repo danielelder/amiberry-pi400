@@ -102,4 +102,4 @@ Reboot the Raspberry Pi and check it boots into the CLI and not the desktop.
 
 ## Next step
 
-[Configure Pi OP](configure-pi-os.md)
+[Configure Pi OS](configure-pi-os.md)
