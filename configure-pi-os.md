@@ -1,4 +1,4 @@
-# Configure Raspberry Pi-400
+# Configure Pi OS
 
 To save your changes when editing a file in nano press: Ctrl+x then Y then `<enter>`.
 
