@@ -1,23 +1,24 @@
 # Configure Raspberry Pi-400
 
+To save your changes when editing a file in nano press: Ctrl+x then Y then `<enter>`.
+
 ## Update OS
 
 ```
 sudo apt update
+sudo apt full-upgrade
 ```
 
 ## Remove the rainbow screen at start up
 
 `sudo nano /boot/firmware/config.txt`
 
+Add the following lines:
+
 ```
 [all]
-hdmi_enable_4kp60=1
 disable_splash=1
 ```
-
-*Note:* to save and exit nano press: Ctrl+x then Y then `<enter>`.
-
 
 ## Set boot options
 
@@ -28,7 +29,24 @@ disable_splash=1
 Add the following to the end of the line (keep everything on one line)
 
 ```
-quiet logo.nologo
+splash quiet loglevel=0 logo.nologo vt.global_cursor_default=0
+```
+
+### Limit the amount of login message text
+
+```
+sudo rm /etc/motd
+sudo truncate -s 0 /etc/issue
+sudo truncate -s 0 /etc/issue.d/IP.issue
+```
+
+`sudo nano /etc/pam.d/login`
+
+Comment out the following lines:
+
+```
+session    optional   pam_motd.so  motd=/run/motd.dynamic
+session    optional   pam_motd.so  noupdate
 ```
 
 ### Remove Cloud init (optional)
@@ -38,12 +56,6 @@ sudo apt purge cloud-init -y
 sudo rm -rf /etc/cloud /var/lib/cloud
 sudo apt autoremove
 ```
-
-## Reboot
-
-Reboot the Raspberry and check it boots ok.
-
-Type: reboot `<enter>`
 
 ## Setup USB
 
@@ -55,20 +67,25 @@ lsblk
 Make a note of the USB partition name, e.g. sda1
 
 ### Create mount point
+
 ```
 sudo mkdir -p /mnt/usb
 ```
 
 ### Mount USB
+
 ```
 sudo mount /dev/sda1 /mnt/usb
 ```
+
 ### Unmount USB
 
 ```
 sudo umount /dev/sda1
 ```
 
-cp /mnt/usb/Workbench/* /home/user/Amiberry/Floppies/
-```
+## Reboot
 
+Reboot the Raspberry and check it boots ok.
+
+Type: reboot `<enter>`
