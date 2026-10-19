@@ -84,8 +84,31 @@ sudo mount /dev/sda1 /mnt/usb
 sudo umount /dev/sda1
 ```
 
+### Boot performance optimisations (optional)
+
+These are optional settings to optimise boot up speed.
+
+#### Disable NetworkManager-dispacher
+
+```
+sudo systemctl stop NetworkManager-dispatcher.service
+sudo systemctl disable NetworkManager-dispatcher.service
+```
+
+#### Disable rpi-eeprom-update.service
+
+```
+sudo systemctl stop rpi-eeprom-update.service
+sudo systemctl disable rpi-eeprom-update.service
+```
+
 ## Reboot
 
 Reboot the Raspberry and check it boots ok.
 
 Type: reboot `<enter>`
+
+## Next Step - Install Amiberry
+
+[Install Amiberry](install-amiberry.md)
+
