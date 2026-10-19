@@ -1,4 +1,4 @@
-# Setup Pi OS
+# Install Pi OS
 
 ## Write the Pi OS image to a microSD card
 
@@ -100,23 +100,6 @@ Splash Screen: On
 
 Reboot the Raspberry Pi and check it boots into the CLI and not the desktop.
 
+## Next step
 
-
-
-### Boot performance optimisations
-
-These are optional settings to optimise boot up speed.
-
-#### Disable NetworkManager-dispacher
-
-```
-sudo systemctl stop NetworkManager-dispatcher.service
-sudo systemctl disable NetworkManager-dispatcher.service
-```
-
-#### Disable rpi-eeprom-update.service
-
-```
-sudo systemctl stop rpi-eeprom-update.service
-sudo systemctl disable rpi-eeprom-update.service
-```
+[Configure Pi OP](configure-pi-os.md)
