@@ -20,6 +20,24 @@ Add the following lines:
 disable_splash=1
 ```
 
+## Add custom splash screen
+
+Copy the file [splash.png](resources/splash.pnd) from the resources folder.
+
+Place it in `usr/share/plymouth/themes/pix/` folder overwriting the original image.
+
+Example command if splash.png image is stored a usb stick:
+
+```
+sudo cp /mnt/usb/splash.png /usr/share/plymouth/themes/pix/
+```
+
+Rebuild Initrd
+
+```
+sudo plymouth-set-default-theme --rebuild-initrd pix
+```
+
 ## Set boot options
 
 ### Set quiet boot
@@ -34,11 +52,14 @@ splash quiet loglevel=0 logo.nologo vt.global_cursor_default=0
 
 ### Limit the amount of login message text
 
+#### Clear MotD, IP address and issue text
+
 ```
 sudo rm /etc/motd
 sudo truncate -s 0 /etc/issue
 sudo truncate -s 0 /etc/issue.d/IP.issue
 ```
+### Remove PAM output
 
 `sudo nano /etc/pam.d/login`
 
@@ -47,6 +68,21 @@ Comment out the following lines:
 ```
 session    optional   pam_motd.so  motd=/run/motd.dynamic
 session    optional   pam_motd.so  noupdate
+```
+#### Remove autologin text
+
+Edit getty@tty1
+
+```
+sudo systemctl edit getty@tty1
+```
+
+Add the following to the top of the script
+
+```
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --skip-login --nonewline --noissue --autologin user --noclear %I $TERM
 ```
 
 ### Remove Cloud init (optional)
